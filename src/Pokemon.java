@@ -10,7 +10,7 @@ class Pokemones {
     int hp;
     int maxHp;
 
-    public Pokemones(String nombre, int ataque, int defensa, int hp) {
+    public Pokemones(String nombre, int ataque, int defensa, int hp, int maxHp) {
         this.nombre = nombre;
         this.ataque = ataque;
         this.defensa = defensa;
@@ -41,7 +41,9 @@ class Pokemones {
 
     public void curar() {
         hp += 20;
-        if (hp > maxHp) hp = maxHp;
+        if (hp > maxHp) hp=maxHp;
+       
+        
     }
 
     public boolean estaDerrotado() {
@@ -52,13 +54,13 @@ class Pokemones {
 public class Pokemon extends JFrame implements ActionListener {
     JTextArea areaTexto = new JTextArea(30, 60);
     JScrollPane scroll = new JScrollPane(areaTexto);
-    JButton atk1 = new JButton("Ataque");
-    JButton atk2 = new JButton("Ataque doble");
-    JButton atk3 = new JButton("Ataque rápido");
+    JButton ataque1 = new JButton("Ataque");
+    JButton ataque2 = new JButton("Ataque doble");
+    JButton ataque3 = new JButton("Ataque rápido");
     JButton curar = new JButton("Curar");
     JComboBox<String> jugador1Selector = new JComboBox<>();
     JComboBox<String> jugador2Selector = new JComboBox<>();
-    JButton iniciar = new JButton("¡Comenzar Batalla!");
+    JButton iniciar = new JButton("¡Batalla!");
 
     HashMap<String, Pokemones> pokemones = new HashMap<>();
     Pokemones jugador1Pokemon, jugador2Pokemon;
@@ -66,7 +68,7 @@ public class Pokemon extends JFrame implements ActionListener {
     boolean batallaIniciada = false;
 
     public Pokemon() {
-        setTitle("Batalla Pokémon - 2 Jugadores");
+        setTitle("Batalla Pokémon");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -74,10 +76,10 @@ public class Pokemon extends JFrame implements ActionListener {
         Color textoClaro = new Color(230, 230, 230);
         Color botonOscuro = new Color(60, 60, 60);
 
-        pokemones.put("Pikachu", new Pokemones("Pikachu", 40, 20, 100));
-        pokemones.put("Charmander", new Pokemones("Charmander", 35, 25, 100));
-        pokemones.put("Bulbasaur", new Pokemones("Bulbasaur", 30, 30, 110));
-        pokemones.put("Squirtle", new Pokemones("Squirtle", 28, 35, 120));
+        pokemones.put("Pikachu", new Pokemones("Pikachu", 40, 25, 150, 155));
+        pokemones.put("Charmander", new Pokemones("Charmander", 35, 25, 145, 150));
+        pokemones.put("Bulbasaur", new Pokemones("Bulbasaur", 30, 30, 160, 160));
+        pokemones.put("Squirtle", new Pokemones("Squirtle", 30, 35, 148, 153));
 
         areaTexto.setBackground(fondoOscuro);
         areaTexto.setForeground(textoClaro);
@@ -114,7 +116,7 @@ public class Pokemon extends JFrame implements ActionListener {
 
         JPanel panelBotones = new JPanel(new GridLayout(1, 4));
         panelBotones.setBackground(fondoOscuro);
-        for (JButton boton : new JButton[]{atk1, atk2, atk3, curar}) {
+        for (JButton boton : new JButton[]{ataque1, ataque2, ataque3, curar}) {
             boton.setBackground(botonOscuro);
             boton.setForeground(textoClaro);
             boton.setEnabled(false);
@@ -141,19 +143,20 @@ public class Pokemon extends JFrame implements ActionListener {
         batallaIniciada = true;
         turnoJugador1 = true;
 
-        for (JButton boton : new JButton[]{atk1, atk2, atk3, curar}) {
+        for (JButton boton : new JButton[]{ataque1, ataque2, ataque3, curar}) {
             boton.setEnabled(true);
         }
 
         areaTexto.setText("");
         areaTexto.append("🎮 ¡Bienvenidos a la batalla Pokémon por turnos!\n");
-        areaTexto.append("🔵 Jugador 1 ha elegido a " + jugador1Pokemon.nombre + ".\n");
-        areaTexto.append("🔴 Jugador 2 ha elegido a " + jugador2Pokemon.nombre + ".\n");
-        areaTexto.append("\n🎯 Empieza el combate. Turno de Jugador 1.\n\n");
+        areaTexto.append("🔵 Jugador 1 elegio a " + jugador1Pokemon.nombre + ".\n");
+        areaTexto.append("🔴 Jugador 2 elegio a " + jugador2Pokemon.nombre + ".\n");
+        areaTexto.append("\n🎯 Que empiece la batalla!! \n");
+        areaTexto.append("Turno de jugador 1. \n\n");
     }
 
     private Pokemones clonarPokemon(Pokemones original) {
-        return new Pokemones(original.nombre, original.ataque, original.defensa, original.maxHp);
+        return new Pokemones(original.nombre, original.ataque, original.defensa, original.hp, original.maxHp);
     }
 
     @Override
@@ -168,13 +171,13 @@ public class Pokemon extends JFrame implements ActionListener {
 
         String resultado = "";
 
-        if (e.getSource() == atk1) {
+        if (e.getSource() == ataque1) {
             int danio = atacante.ataqueNormal(defensor);
             resultado += nombreAtacante + " atacó con un golpe directo y causó " + danio + " puntos de daño a " + defensor.nombre + ".\n";
-        } else if (e.getSource() == atk2) {
+        } else if (e.getSource() == ataque2) {
             int danio = atacante.ataqueEspecial(defensor);
             resultado += nombreAtacante + " lanzó un poderoso ataque especial, causando " + danio + " de daño a " + defensor.nombre + "!\n";
-        } else if (e.getSource() == atk3) {
+        } else if (e.getSource() == ataque3) {
             int danio = atacante.ataqueRapido(defensor);
             resultado += nombreAtacante + " realizó un ataque rápido. " + defensor.nombre + " recibió " + danio + " puntos de daño.\n";
         } else if (e.getSource() == curar) {
@@ -202,9 +205,9 @@ public class Pokemon extends JFrame implements ActionListener {
     }
 
     private void desactivarBotones() {
-        atk1.setEnabled(false);
-        atk2.setEnabled(false);
-        atk3.setEnabled(false);
+        ataque1.setEnabled(false);
+        ataque2.setEnabled(false);
+        ataque3.setEnabled(false);
         curar.setEnabled(false);
     }
 
