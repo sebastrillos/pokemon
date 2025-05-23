@@ -48,7 +48,7 @@ class Pokemones {
 
     public boolean estaDerrotado() {
         return hp <= 0;
-    }
+    } 
 }
 
 public class Pokemon extends JFrame implements ActionListener {
@@ -76,10 +76,10 @@ public class Pokemon extends JFrame implements ActionListener {
         Color texto = new Color(0, 0, 0);
         Color botones = new Color(135, 206, 250);
 
-        pokemones.put("Pikachu", new Pokemones("Pikachu", 40, 25, 150, 155));
-        pokemones.put("Charmander", new Pokemones("Charmander", 35, 25, 145, 150));
+        pokemones.put("Pikachu", new Pokemones("Pikachu", 40, 25, 150, 150));
+        pokemones.put("Charmander", new Pokemones("Charmander", 35, 25, 145, 145));
         pokemones.put("Bulbasaur", new Pokemones("Bulbasaur", 30, 30, 160, 160));
-        pokemones.put("Squirtle", new Pokemones("Squirtle", 30, 35, 148, 153));
+        pokemones.put("Squirtle", new Pokemones("Squirtle", 30, 35, 153, 153));
 
         areaTexto.setBackground(fondo);
         areaTexto.setForeground(texto);
@@ -89,7 +89,7 @@ public class Pokemon extends JFrame implements ActionListener {
         add(scroll, BorderLayout.CENTER);
 
         JPanel seleccionPanel = new JPanel();
-        seleccionPanel.setBackground(fondo);
+        seleccionPanel.setBackground(botones);
         seleccionPanel.setLayout(new GridLayout(2, 3));
 
         JLabel label1 = new JLabel("Jugador 1", JLabel.CENTER);
@@ -114,7 +114,7 @@ public class Pokemon extends JFrame implements ActionListener {
 
         add(seleccionPanel, BorderLayout.NORTH);
 
-        JPanel panelBotones = new JPanel(new GridLayout(1, 4));
+        JPanel panelBotones = new JPanel(new GridLayout(3, 6));
         panelBotones.setBackground(fondo);
         for (JButton boton : new JButton[]{ataque1, ataque2, ataque3, curar}) {
             boton.setBackground(botones);
